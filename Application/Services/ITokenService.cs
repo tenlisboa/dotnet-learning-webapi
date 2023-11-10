@@ -1,6 +1,6 @@
-using LearnApi.Models;
+using LearnApi.Domain.Models;
 
-namespace LearnApi.Services
+namespace LearnApi.Application.Services
 {
     public interface ITokenService
     {

@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace LearnApi.Models;
+namespace LearnApi.Domain.Models;
 
 [Table("employees")]
 public class Employee

@@ -1,11 +1,11 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using LearnApi.Models;
+using LearnApi.Domain.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace LearnApi.Services
+namespace LearnApi.Application.Services
 {
     public class TokenService : ITokenService
     {

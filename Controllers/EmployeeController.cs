@@ -1,5 +1,5 @@
-using LearnApi.Models;
-using LearnApi.ViewModels;
+using LearnApi.Domain.Models;
+using LearnApi.Application.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

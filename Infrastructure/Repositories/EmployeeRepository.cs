@@ -1,6 +1,6 @@
-using LearnApi.Models;
+using LearnApi.Domain.Models;
 
-namespace LearnApi.Infrastructure
+namespace LearnApi.Infrastructure.Repository
 {
     public class EmployeeRepository : IEmployeeRepository
     {
@@ -22,14 +22,19 @@ namespace LearnApi.Infrastructure
             return _context.Employees.Find(id);
         }
 
-        public List<Employee> GetAll()
+        public List<EmployeeDTO> GetAll(int pageNumber, int pageQuantity)
         {
-            return _context.Employees.ToList();
-        }
-
-        public List<Employee> GetAll(int pageNumber, int pageQuantity)
-        {
-            return _context.Employees.Skip((pageNumber * pageQuantity) - pageQuantity).Take(pageQuantity).ToList();
+            return _context.Employees
+                .Skip((pageNumber * pageQuantity) - pageQuantity)
+                .Take(pageQuantity)
+                .Select(b =>
+                    new EmployeeDTO()
+                    {
+                        Id = b.Id,
+                        Name = b.Name,
+                        Photo = b.Photo
+                    }
+                ).ToList();
         }
     }
 }

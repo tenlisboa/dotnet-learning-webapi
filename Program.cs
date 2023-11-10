@@ -1,8 +1,9 @@
 using System.Text;
 using LearnApi;
+using LearnApi.Infrastructure.Repository;
 using LearnApi.Infrastructure;
-using LearnApi.Models;
-using LearnApi.Services;
+using LearnApi.Domain.Models;
+using LearnApi.Application.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;

@@ -1,4 +1,4 @@
-namespace LearnApi.ViewModels
+namespace LearnApi.Application.ViewModels
 {
     public class EmployeeViewModel
     {

@@ -1,4 +1,4 @@
-using LearnApi.Models;
+using LearnApi.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace LearnApi.Infrastructure;

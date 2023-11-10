@@ -1,5 +1,5 @@
-using LearnApi.Models;
-using LearnApi.Services;
+using LearnApi.Domain.Models;
+using LearnApi.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LearnApi.Controllers
