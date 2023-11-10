@@ -16,13 +16,13 @@ namespace LearnApi.Application.Services
             this._config = config;
         }
 
-        public object GenerateToken(Employee employee)
+        public object GenerateToken(User user)
         {
             var key = Encoding.ASCII.GetBytes(_config.Value.JwtSecret);
             var tokenConfig = new SecurityTokenDescriptor
             {
                 Subject = new System.Security.Claims.ClaimsIdentity(new Claim[]{
-                    new Claim("employeeId", employee.Id.ToString()),
+                    new Claim("userId", user.Id.ToString()),
                 }),
                 Expires = DateTime.UtcNow.AddHours(3),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)

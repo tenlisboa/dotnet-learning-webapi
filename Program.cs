@@ -57,6 +57,8 @@ builder.Services.Configure<Config>(builder.Configuration.GetSection("Config"));
 
 builder.Services.AddTransient<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddTransient<ITokenService, TokenService>();
+builder.Services.AddTransient<IPasswordHasher, PasswordHasher>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
 
 var key = Encoding.ASCII.GetBytes(builder.Configuration.GetSection("Config").GetValue<string>("JwtSecret"));
 builder.Services.AddAuthentication(x =>

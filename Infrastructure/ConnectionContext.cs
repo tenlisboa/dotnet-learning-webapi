@@ -5,6 +5,7 @@ namespace LearnApi.Infrastructure;
 
 public class ConnectionContext : DbContext
 {
+    public DbSet<User> Users { get; set; }
     public DbSet<Employee> Employees { get; set; }
 
     public ConnectionContext() { }

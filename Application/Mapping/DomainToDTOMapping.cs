@@ -8,6 +8,7 @@ namespace LearnApi.Application.Mapping
         public DomainToDTOMapping()
         {
             CreateMap<Employee, EmployeeDTO>();
+            CreateMap<User, UserDTO>();
         }
     }
 }
