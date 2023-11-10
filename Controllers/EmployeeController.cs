@@ -2,6 +2,7 @@ using LearnApi.Domain.Models;
 using LearnApi.Application.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
 
 namespace LearnApi.Controllers
 {
@@ -11,11 +12,13 @@ namespace LearnApi.Controllers
     {
         private readonly IEmployeeRepository _employeeRepository;
         private readonly ILogger<EmployeeController> _logger;
+        private readonly IMapper _mapper;
 
-        public EmployeeController(IEmployeeRepository employeeRepository, ILogger<EmployeeController> logger)
+        public EmployeeController(IEmployeeRepository employeeRepository, ILogger<EmployeeController> logger, IMapper mapper)
         {
             _employeeRepository = employeeRepository ?? throw new ArgumentNullException(nameof(employeeRepository));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
 
@@ -41,11 +44,24 @@ namespace LearnApi.Controllers
 
         [HttpGet]
         [Authorize]
+        [Route("{id}")]
+        public IActionResult Get(int id)
+        {
+            var employee = _employeeRepository.Get(id);
+
+            var employeeDTO = _mapper.Map<EmployeeDTO>(employee);
+
+            return Ok(employeeDTO);
+        }
+
+        [HttpGet]
+        [Authorize]
         public IActionResult GetAll(int pageNumber, int pageQuantity)
         {
             var employees = _employeeRepository.GetAll(pageNumber, pageQuantity);
+            var employeesDTO = _mapper.Map<List<EmployeeDTO>>(employees);
 
-            return Ok(employees);
+            return Ok(employeesDTO);
         }
 
         [Authorize]

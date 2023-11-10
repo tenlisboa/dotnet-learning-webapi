@@ -22,19 +22,12 @@ namespace LearnApi.Infrastructure.Repository
             return _context.Employees.Find(id);
         }
 
-        public List<EmployeeDTO> GetAll(int pageNumber, int pageQuantity)
+        public List<Employee> GetAll(int pageNumber, int pageQuantity)
         {
             return _context.Employees
                 .Skip((pageNumber * pageQuantity) - pageQuantity)
                 .Take(pageQuantity)
-                .Select(b =>
-                    new EmployeeDTO()
-                    {
-                        Id = b.Id,
-                        Name = b.Name,
-                        Photo = b.Photo
-                    }
-                ).ToList();
+                .ToList();
         }
     }
 }
