@@ -29,7 +29,7 @@ namespace LearnApi.Infrastructure
 
         public List<Employee> GetAll(int pageNumber, int pageQuantity)
         {
-            return _context.Employees.Skip(pageNumber * pageQuantity).Take(pageQuantity).ToList();
+            return _context.Employees.Skip((pageNumber * pageQuantity) - pageQuantity).Take(pageQuantity).ToList();
         }
     }
 }
