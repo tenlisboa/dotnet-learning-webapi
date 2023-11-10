@@ -4,10 +4,11 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
 
-namespace LearnApi.Controllers
+namespace LearnApi.Controllers.v2
 {
     [ApiController]
-    [Route("api/v1/employee")]
+    [Route("api/v{version:apiVersion}/employee")]
+    [ApiVersion("2.0")]
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeRepository _employeeRepository;

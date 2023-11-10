@@ -9,6 +9,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using LearnApi.Application.Mapping;
+using Microsoft.AspNetCore.Mvc;
+using LearnApi.Application.Swagger;
+using Microsoft.Extensions.Options;
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,10 +26,27 @@ builder.Services.AddControllers();
 
 builder.Services.AddAutoMapper(typeof(DomainToDTOMapping));
 
+builder.Services.AddApiVersioning(
+    o =>
+    {
+        o.AssumeDefaultVersionWhenUnspecified = true;
+        o.DefaultApiVersion = new ApiVersion(1, 0);
+    }
+);
+
+builder.Services.AddVersionedApiExplorer(setup =>
+{
+    setup.GroupNameFormat = "'v'VVV";
+    setup.SubstituteApiVersionInUrl = true;
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
 builder.Services.AddSwaggerGen(c =>
 {
+    c.OperationFilter<SwaggerDefaultValues>();
+
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         Name = "Authorization",
@@ -79,13 +101,23 @@ builder.Services.AddAuthentication(x =>
 });
 
 var app = builder.Build();
+var versionDescriptorProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/error-development");
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        // Build a swagger endpoint for each discovered API version
+        foreach (var description in versionDescriptorProvider.ApiVersionDescriptions)
+        {
+            var url = $"/swagger/{description.GroupName}/swagger.json";
+            var name = description.GroupName.ToUpperInvariant();
+            options.SwaggerEndpoint(url, name);
+        }
+    });
 }
 else
 {
