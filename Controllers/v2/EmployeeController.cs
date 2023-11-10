@@ -74,6 +74,8 @@ namespace LearnApi.Controllers.v2
 
             if (employee is null) return NotFound();
 
+            if (employee.Photo is null) return NotFound("no picture to download");
+
             var dataBytes = System.IO.File.ReadAllBytes(employee!.Photo);
 
             return File(dataBytes, "image/png");

@@ -8,7 +8,7 @@ namespace LearnApi.Controllers.v1
 {
     [ApiController]
     [Route("api/v{version:apiVersion}/employee")]
-    [ApiVersion("1.0")]
+    [ApiVersion("1.0", Deprecated = true)]
     public class EmployeeController : ControllerBase
     {
         private readonly IEmployeeRepository _employeeRepository;
@@ -74,7 +74,8 @@ namespace LearnApi.Controllers.v1
 
             if (employee is null) return NotFound();
 
-            var dataBytes = System.IO.File.ReadAllBytes(employee!.Photo);
+            // unsafe, fixed in v2
+            var dataBytes = System.IO.File.ReadAllBytes(employee!.Photo!);
 
             return File(dataBytes, "image/png");
         }
