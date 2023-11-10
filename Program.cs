@@ -100,6 +100,15 @@ builder.Services.AddAuthentication(x =>
     };
 });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "AllowEveryone",
+    policy =>
+    {
+        policy.WithOrigins("*").AllowAnyMethod().AllowAnyHeader();
+    });
+});
+
 var app = builder.Build();
 var versionDescriptorProvider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 
@@ -123,6 +132,8 @@ else
 {
     app.UseExceptionHandler("/error");
 }
+
+app.UseCors("AllowEveryone");
 
 app.UseHttpsRedirection();
 
